@@ -2346,6 +2346,20 @@ extension RulesTests {
         testFormatting(for: input, output, rule: FormatRules.sortedImports, exclude: ["semicolons"])
     }
 
+    func testSortedImportsWithGroupingAlphaNolineBreaksSimpleCase() {
+        let input = "import Foo\n\nimport Module\n\n\nimport Bar"
+        let output = "import Bar\nimport Foo\nimport Module"
+        let options = FormatOptions(importGrouping: .alphaNoLineBreaks)
+        testFormatting(for: input, output, rule: FormatRules.sortedImports, options: options)
+    }
+
+    func testSortedImportsWithGroupingAlphaNolineBreaksComplexCase() {
+        let input = "@testable import Foo\n\nimport ModuleB\n@testable import ModuleA\n\n\nimport Bar\nimport ModuleC"
+        let output = "import Bar\n@testable import Foo\n@testable import ModuleA\nimport ModuleB\nimport ModuleC"
+        let options = FormatOptions(importGrouping: .alphaNoLineBreaks)
+        testFormatting(for: input, output, rule: FormatRules.sortedImports, options: options)
+    }
+
     func testSortedImportEnum() {
         let input = "import enum Foo.baz\nimport Foo.bar"
         let output = "import Foo.bar\nimport enum Foo.baz"

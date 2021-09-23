@@ -570,7 +570,7 @@ struct _Descriptors {
     let importGrouping = OptionDescriptor(
         argumentName: "importgrouping",
         displayName: "Import Grouping",
-        help: "\"testable-first/last\", \"alpha\" (default) or \"length\"",
+        help: "\"testable-first/last\", \"alpha\" (default), \"alpha-no-line-breaks\" or \"length\"",
         keyPath: \FormatOptions.importGrouping,
         altOptions: [
             "alphabetized": .alpha,

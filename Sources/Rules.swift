@@ -4225,23 +4225,25 @@ public struct _FormatRules {
         sharedOptions: ["linebreaks"]
     ) { formatter in
         func sortRanges(_ ranges: [Formatter.ImportRange]) -> [Formatter.ImportRange] {
-            if case .alpha = formatter.options.importGrouping {
+            switch formatter.options.importGrouping {
+            case .alpha, .alphaNoLineBreaks:
                 return ranges.sorted(by: <)
-            } else if case .length = formatter.options.importGrouping {
+            case .length:
                 return ranges.sorted { $0.module.count < $1.module.count }
-            }
-            // Group @testable imports at the top or bottom
-            return ranges.sorted {
-                // If both have a @testable keyword, or neither has one, just sort alphabetically
-                guard $0.isTestable != $1.isTestable else {
-                    return $0 < $1
+            default:
+                // Group @testable imports at the top or bottom
+                return ranges.sorted {
+                    // If both have a @testable keyword, or neither has one, just sort alphabetically
+                    guard $0.isTestable != $1.isTestable else {
+                        return $0 < $1
+                    }
+                    return formatter.options.importGrouping == .testableFirst ? $0.isTestable : $1.isTestable
                 }
-                return formatter.options.importGrouping == .testableFirst ? $0.isTestable : $1.isTestable
             }
         }
 
-        for var importRanges in formatter.parseImports().reversed() {
-            guard importRanges.count > 1 else { continue }
+        func sortImports(with importRanges: [Formatter.ImportRange]) {
+            guard importRanges.count > 1 else { return }
             let range: Range = importRanges.first!.range.lowerBound ..< importRanges.last!.range.upperBound
             let sortedRanges = sortRanges(importRanges)
             var insertedLinebreak = false
@@ -4257,6 +4259,16 @@ public struct _FormatRules {
                 sortedTokens.removeFirst()
             }
             formatter.replaceTokens(in: range, with: sortedTokens)
+        }
+
+        switch formatter.options.importGrouping {
+        case .alphaNoLineBreaks:
+            let importRanges = Array(formatter.parseImports().joined())
+            sortImports(with: importRanges)
+        default:
+            for var importRanges in formatter.parseImports().reversed() {
+                sortImports(with: importRanges)
+            }
         }
     }
 

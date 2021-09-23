@@ -262,6 +262,7 @@ public enum Grouping: Equatable, RawRepresentable, CustomStringConvertible {
 /// Grouping for sorting imports
 public enum ImportGrouping: String, CaseIterable {
     case alpha
+    case alphaNoLineBreaks
     case length
     case testableFirst = "testable-first"
     case testableLast = "testable-last"

@@ -1264,7 +1264,7 @@ Sort import statements alphabetically.
 
 Option | Description
 --- | ---
-`--importgrouping` | "testable-first/last", "alpha" (default) or "length"
+`--importgrouping` | "testable-first/last", "alpha" (default), "alpha-no-line-breaks" or "length"
 
 <details>
 <summary>Examples</summary>

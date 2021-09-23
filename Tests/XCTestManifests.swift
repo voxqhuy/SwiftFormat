@@ -1941,6 +1941,8 @@ extension RulesTests {
         ("testSortedImportsKeepsPreviousCommentWithImport2", testSortedImportsKeepsPreviousCommentWithImport2),
         ("testSortedImportsOnSameLine", testSortedImportsOnSameLine),
         ("testSortedImportsSimpleCase", testSortedImportsSimpleCase),
+        ("testSortedImportsWithGroupingAlphaNolineBreaksComplexCase", testSortedImportsWithGroupingAlphaNolineBreaksComplexCase),
+        ("testSortedImportsWithGroupingAlphaNolineBreaksSimpleCase", testSortedImportsWithGroupingAlphaNolineBreaksSimpleCase),
         ("testSortedImportsWithSemicolonAndCommentOnSameLine", testSortedImportsWithSemicolonAndCommentOnSameLine),
         ("testSortedSwitchCaseLet", testSortedSwitchCaseLet),
         ("testSortedSwitchCaseMultiline", testSortedSwitchCaseMultiline),
